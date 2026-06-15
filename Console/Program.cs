@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using System.Diagnostics;
+using Core.Models;
 
 var bookingRequest = new BookingRequest();
 
@@ -9,7 +10,8 @@ List<Counter> counters = [
     new("Counter 2", 4, 250),
     new("Counter 3", 3, 400)
 ];
-
-
-var threads = Core.Services.ThreadCounterService.RunThreads(counters);
+var threadStopWatch = Stopwatch.StartNew();
+var threads = ThreadCounterService.RunThreads(counters);
 foreach(var thread in threads) thread.Join();
+threadStopWatch.Stop();
+Console.WriteLine($"Threads took {threadStopWatch.ElapsedMilliseconds} ms to complete");
