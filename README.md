@@ -1,5 +1,7 @@
 ### B.E.A.M. ? Booking Engine for Asynchronous Management
 
+ ![Flytdiagram](img/flytdiagram.png)
+
 ## Description
 
 A C# asynchronous booking simulation system designed to demonstrate concurrency, task orchestration, and external service integration patterns.
