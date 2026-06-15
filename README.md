@@ -1,6 +1,6 @@
 ### B.E.A.M. ? Booking Engine for Asynchronous Management
 
- ![Flytdiagram](img/flytdiagram.png)
+ ![Flytdiagram](img/flowchart.png)
 
 ## Description
 
