@@ -1,0 +1,1 @@
+// Del C: Håndterer ren async/await med Task.WhenAll

@@ -1,0 +1,1 @@
+// Del A: Håndterer OS-tråder og .Join()

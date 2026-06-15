@@ -1,0 +1,1 @@
+// Data fra Weather-endepunktet

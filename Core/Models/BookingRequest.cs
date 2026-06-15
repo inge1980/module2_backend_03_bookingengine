@@ -1,3 +1,4 @@
+// Romtype, start- og sluttdato
 using System;
 
 namespace Core.Models

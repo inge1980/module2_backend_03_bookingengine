@@ -19,13 +19,13 @@ public static class ThreadCounterService
 
     private static void Count(Counter counter)
     {
-        Console.WriteLine($"Counter {counter.Name} started counting on thread....");
+        Console.WriteLine($"Threads: Counter {counter.Name} started counting on thread....");
 
         for (var i = 1; i <= counter.MaxVal; i++)
         {
             Thread.Sleep(counter.Delay);
-            Console.WriteLine($"Counted to {1} on {counter.Name}");
+            Console.WriteLine($"Threads: Counted to {i} on {counter.Name}");
         }
-        Console.WriteLine($"Counter {counter.Name} is complete...");
+        Console.WriteLine($"Threads: Counter {counter.Name} is complete...");
     }
 }
