@@ -103,22 +103,22 @@ Key concepts:
 
 This project is structured to explicitly demonstrate the required learning goals:
 
-### A ? Thread + Join
+### A - Thread + Join
 - Thread-based simulation of concurrent booking requests
 - Demonstrates execution order differences with and without Join
 - Highlights race conditions and non-deterministic output
 
-### B ? Task + TaskCompletionSource
+### B - Task + TaskCompletionSource
 - Task-based orchestration of booking workflows
 - Explicit completion signaling for booking success/failure
 - Coordination of multiple asynchronous operations
 
-### C ? async/await Orchestration
+### C - async/await Orchestration
 - Booking pipeline implemented with async/await
 - Uses await Task.Delay to simulate processing steps
 - Improved readability compared to manual task coordination
 
-### D ? HttpClient Integration
+### D - HttpClient Integration
 - Simulated external HTTP calls (pricing, availability, weather)
 - Async calls influence booking behavior and timing
 - Demonstrates non-blocking I/O and external dependency handling
