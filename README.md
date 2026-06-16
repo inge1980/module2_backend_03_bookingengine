@@ -90,11 +90,11 @@ The goal is to explore and compare different approaches to asynchronous programm
 This system simulates concurrent backend behavior in a single-process environment.
 
 Key concepts:
-- Thread-based simulation of concurrent execution (Del A)
-- Task-based orchestration using async/await (Del C)
-- TaskCompletionSource-style coordination patterns (Del B, where applicable)
+- Thread-based simulation of concurrent execution (Part A)
+- Task-based orchestration using async/await (Part C)
+- TaskCompletionSource-style coordination patterns (Part B, where applicable)
 - Fan-out / fan-in processing model
-- Simulated external HTTP service integration (Del D)
+- Simulated external HTTP service integration (Part D)
 - Failure scenarios and timing variability to emulate real async systems
 
 ---
