@@ -99,7 +99,7 @@ Key concepts:
 
 ---
 
-## Assignment Mapping (A?D)
+## Assignment Mapping (A-D)
 
 This project is structured to explicitly demonstrate the required learning goals:
 
