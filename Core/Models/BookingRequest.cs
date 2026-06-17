@@ -1,13 +1,8 @@
-// Romtype, start- og sluttdato
-using System;
+namespace Core.Models;
 
-namespace Core.Models
+public class BookingRequest
 {
-    public class BookingRequest
-    {
-        public BookingRequest()
-        {
-            Console.WriteLine("Hello, Core BookingRequest!");
-        }
-    }
+    public string RoomType { get; set; } = string.Empty;
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
 }

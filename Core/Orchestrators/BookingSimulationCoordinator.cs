@@ -1,1 +1,0 @@
-// Velger hvilken gren som skal kjøre forespørselen
