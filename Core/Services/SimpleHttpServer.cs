@@ -1,3 +1,6 @@
+using System.Net;
+using System.Text;
+
 public class SimpleHttpServer : IDisposable
 {
     private readonly HttpListener _listener = new();
