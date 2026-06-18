@@ -1,4 +1,4 @@
-// HttpClient-implementasjon (Vær/Pris/Tilgjengelighet)
+// HttpClient-implementasjon (Tilgjengelighet/Pris/Vær)
 using Core.Models;
 namespace Core.Services;
 
@@ -10,7 +10,8 @@ public class BookingGateway : IBookingGateway
     {
         await Task.Delay(500, cancellationToken);
 
-        return Random.Shared.Next(1, 10) > 2;
+        // Simulerer 50% sjanse for tilgjengelighet
+        return Random.Shared.Next(1, 10) > 5;
     }
 
     public async Task<PriceResponse> GetPriceAsync(
@@ -19,6 +20,7 @@ public class BookingGateway : IBookingGateway
     {
         await Task.Delay(700, cancellationToken);
 
+        // Simulerer prisendringer
         return new PriceResponse
         {
             Price = Random.Shared.Next(1000, 5000)
@@ -37,8 +39,10 @@ public class BookingGateway : IBookingGateway
             "Storm"
         };
 
+        // Simulerer tilfeldig vær med temperatur
         return new WeatherResponse
         {
+            Temperature = Random.Shared.Next(-10, 30),
             Condition = conditions[
                 Random.Shared.Next(conditions.Length)
             ]

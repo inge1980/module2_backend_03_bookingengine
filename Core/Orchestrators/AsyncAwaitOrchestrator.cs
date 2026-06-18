@@ -20,7 +20,7 @@ public class AsyncAwaitOrchestrator
         BookingRequest request,
         CancellationToken ct)
     {
-        Console.WriteLine($"[START] {request.RoomType}");
+        Console.WriteLine($"[START] {request.RoomType}, {request.StartDate:d} - {request.EndDate:d}");
 
         var weatherTask = gateway.GetWeatherAsync(ct);
         var priceTask = gateway.GetPriceAsync(request, ct);
@@ -53,7 +53,7 @@ public class AsyncAwaitOrchestrator
                 : "Not available"
         };
 
-        Console.WriteLine($"[END] Success={result.Success}");
+        Console.WriteLine($"[END] Success={result.Success}, Message={result.Message}");
 
         return result;
     }

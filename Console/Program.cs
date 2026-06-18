@@ -14,6 +14,12 @@ var requests = new List<BookingRequest>
     {
         RoomType = "Single",
         StartDate = DateTime.Today,
+        EndDate = DateTime.Today.AddDays(1)
+    },
+    new BookingRequest
+    {
+        RoomType = "Double",
+        StartDate = DateTime.Today,
         EndDate = DateTime.Today.AddDays(2)
     },
     new BookingRequest
@@ -21,6 +27,24 @@ var requests = new List<BookingRequest>
         RoomType = "Double",
         StartDate = DateTime.Today,
         EndDate = DateTime.Today.AddDays(3)
+    },
+    new BookingRequest
+    {
+        RoomType = "Double",
+        StartDate = DateTime.Today,
+        EndDate = DateTime.Today.AddDays(4)
+    },
+    new BookingRequest
+    {
+        RoomType = "Double",
+        StartDate = DateTime.Today,
+        EndDate = DateTime.Today.AddDays(5)
+    },
+    new BookingRequest
+    {
+        RoomType = "Double",
+        StartDate = DateTime.Today,
+        EndDate = DateTime.Today.AddDays(6)
     }
 };
 
@@ -28,9 +52,11 @@ var ct = CancellationToken.None;
 
 var tasks = requests.Select(r => orchestrator.ExecuteAsync(r, ct));
 
+var taskStopWatch = Stopwatch.StartNew();
 await Task.WhenAll(tasks);
+taskStopWatch.Stop();
 
-Console.WriteLine("All bookings completed");
+Console.WriteLine($"All booking tasks took {taskStopWatch.ElapsedMilliseconds} ms to complete");
 
 
 
