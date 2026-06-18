@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿// Program.cs
+using System.Diagnostics;
 using Core.Models;
 using Core.Services;
 using Core.Orchestrators;
@@ -10,42 +11,12 @@ var orchestrator = new AsyncAwaitOrchestrator(gateway);
 
 var requests = new List<BookingRequest>
 {
-    new BookingRequest
-    {
-        RoomType = "Single",
-        StartDate = DateTime.Today,
-        EndDate = DateTime.Today.AddDays(1)
-    },
-    new BookingRequest
-    {
-        RoomType = "Double",
-        StartDate = DateTime.Today,
-        EndDate = DateTime.Today.AddDays(2)
-    },
-    new BookingRequest
-    {
-        RoomType = "Double",
-        StartDate = DateTime.Today,
-        EndDate = DateTime.Today.AddDays(3)
-    },
-    new BookingRequest
-    {
-        RoomType = "Double",
-        StartDate = DateTime.Today,
-        EndDate = DateTime.Today.AddDays(4)
-    },
-    new BookingRequest
-    {
-        RoomType = "Double",
-        StartDate = DateTime.Today,
-        EndDate = DateTime.Today.AddDays(5)
-    },
-    new BookingRequest
-    {
-        RoomType = "Double",
-        StartDate = DateTime.Today,
-        EndDate = DateTime.Today.AddDays(6)
-    }
+    new("Single", DateTime.Today, DateTime.Today.AddDays(1)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(2)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(3)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(4)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(5)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(6))
 };
 
 var ct = CancellationToken.None;
