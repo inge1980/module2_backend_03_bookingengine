@@ -1,4 +1,5 @@
 // Data fra Pricing-endepunktet
+// Endelig pris
 namespace Core.Models;
 
 public class PriceResponse

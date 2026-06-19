@@ -1,5 +1,5 @@
 // BookingGateway.cs
-// HttpClient-implementasjon (Tilgjengelighet/Pris/Vær)
+// Simulert henting av tilgjengelighet, pris og vær asynkront (med random delay)
 using Core.Models;
 namespace Core.Services;
 
@@ -34,6 +34,7 @@ public class BookingGateway : IBookingGateway
     {
         await Task.Delay(300, cancellationToken);
 
+        // Forskjellige værtyper
         string[] conditions =
         {
             "Clear",

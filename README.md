@@ -30,7 +30,7 @@ The goal is to explore and compare different approaches to asynchronous programm
   - Weather influence on booking behavior
 
 - Failure Simulation  
-  Simulated timeouts and service failures to test error handling and resilience.
+  Simulated random failures in external services (e.g. availability checks) to test basic error handling in async workflows.
 
 - Execution Logging  
   Tracks async flow, task execution, and concurrency behavior for debugging and analysis.
@@ -92,9 +92,8 @@ This system simulates concurrent backend behavior in a single-process environmen
 Key concepts:
 - Thread-based simulation of concurrent execution (Part A)
 - Task-based orchestration using async/await (Part C)
-- TaskCompletionSource-style coordination patterns (Part B, where applicable)
+- TaskCompletionSource-style coordination patterns (Part B)
 - Fan-out / fan-in processing model
-- Simulated external HTTP service integration (Part D)
 - Failure scenarios and timing variability to emulate real async systems
 
 ---
@@ -109,19 +108,14 @@ This project is structured to explicitly demonstrate the required learning goals
 - Highlights race conditions and non-deterministic output
 
 ### B - Task + TaskCompletionSource
-- Task-based orchestration of booking workflows
+- Task-based orchestration of booking workflows using TaskCompletionSource for manual task completion
 - Explicit completion signaling for booking success/failure
 - Coordination of multiple asynchronous operations
 
 ### C - async/await Orchestration
-- Booking pipeline implemented with async/await
-- Uses await Task.Delay to simulate processing steps
+- Booking pipeline implemented with async/await and Task.WhenAll orchestration
+- Uses await Task.Delay and simulated external calls (pricing, availability, weather)
 - Improved readability compared to manual task coordination
-
-### D - HttpClient Integration
-- Simulated external HTTP calls (pricing, availability, weather)
-- Async calls influence booking behavior and timing
-- Demonstrates non-blocking I/O and external dependency handling
 
 ---
 

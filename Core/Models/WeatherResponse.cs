@@ -1,5 +1,5 @@
 // Data fra Weather-endepunktet
-// Data fra Pricing-endepunktet
+// Værforhold og temperatur
 namespace Core.Models;
 
 public class WeatherResponse

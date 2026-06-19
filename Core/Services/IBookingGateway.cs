@@ -1,4 +1,6 @@
 // IBookingGateway.cs
+// Booking interface som gjør at resten av systemet ikke trenger å vite
+// hvordan dataene hentes (API, database, simulering osv.)
 using Core.Models;
 namespace Core.Services;
 

@@ -1,5 +1,5 @@
 //BookingResult.cs
-// Suksess/feil, endelig pris, loggspor
+// Suksess/feil, loggspor
 
 namespace Core.Models;
 

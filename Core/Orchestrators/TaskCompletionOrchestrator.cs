@@ -1,1 +1,0 @@
-// Del B: Håndterer TaskCompletionSource og signaler

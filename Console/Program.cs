@@ -26,10 +26,9 @@ async Task HandleMenu() {
     
     switch (userChoice) {
         case "A":   JoinThreads(threadList);                break;
-        case "B":   await TaskCompletion(threadList);             break;
+        case "B":   await TaskCompletion(threadList);       break;
         case "C":   await OrchestrationAsync(threadList);   break;
-        case "D":   HttpClientIntegration(threadList);      break;
-        case "E":   Exit();                                 break;
+        case "D":   Exit();                                 break;
         default:    Console.WriteLine("Ugyldig valg");      break;
     }
 }
@@ -39,8 +38,7 @@ void InitMenu() {
     Console.WriteLine("A. Kjør tråder");
     Console.WriteLine("B. Kjør tasks");
     Console.WriteLine("C. Kjør orchestrator (async/await)");
-    Console.WriteLine("D. Kjør HttpClient-integrasjon (tilgjengelighet/pris/vær)");
-    Console.WriteLine("E. Avslutt");
+    Console.WriteLine("D. Avslutt");
 }
 
 void JoinThreads(string[] list) {
@@ -55,9 +53,23 @@ void JoinThreads(string[] list) {
 async Task TaskCompletion(string[] list) {
     Console.WriteLine("TaskCompletion");
     var taskStopWatch = Stopwatch.StartNew();
+
+    // create tasks based on requests
     var tasks = TaskBookingService.RunTasks(requests);
-    await Task.WhenAll(tasks);
+
+    // wait for all the tasks to complete
+    var results = await Task.WhenAll(tasks);
+
     taskStopWatch.Stop();
+
+    // print the results
+    foreach (var result in results)
+    {
+        Console.WriteLine(
+            $"Success={result.Success}, Message={result.Message}");
+    }
+    
+    // record time spent
     Console.WriteLine($"All booking tasks took {taskStopWatch.ElapsedMilliseconds} ms to complete");
 }
 
@@ -66,22 +78,22 @@ async Task OrchestrationAsync(string[] list) {
 
     var gateway = new BookingGateway();
 
-    // velg orchestrator
+    // create orchestrator to handle multiple async connections
     var orchestrator = new AsyncAwaitOrchestrator(gateway);
 
     var ct = CancellationToken.None;
 
+    // create multiple tasks running in parallel
     var tasks = requests.Select(r => orchestrator.ExecuteAsync(r, ct));
 
     var taskStopWatch = Stopwatch.StartNew();
+
+    // Wait for all tasks to complete
     await Task.WhenAll(tasks);
+
     taskStopWatch.Stop();
 
     Console.WriteLine($"All booking tasks took {taskStopWatch.ElapsedMilliseconds} ms to complete");
-}
-
-void HttpClientIntegration(string[] list) {
-    Console.WriteLine("HttpClientIntegration");
 }
 
 void Exit() {
@@ -91,34 +103,5 @@ void Exit() {
 
 while (activeMenu)
 {
-    //System.Threading.Thread.Sleep(1000);
     await HandleMenu();
 }
-
-
-
-// ####################
-/* 
-var bookingRequest = new BookingRequest();
-
-Console.WriteLine("Hello, Engine!");
-
-List<Counter> counters = [
-    new("Counter 1", 10, 100),
-    new("Counter 2", 4, 250),
-    new("Counter 3", 3, 400)
-];
-
-var threadStopWatch = Stopwatch.StartNew();
-var threads = ThreadBookingService.RunThreads(counters);
-foreach(var thread in threads) thread.Join();
-threadStopWatch.Stop();
-
-
-var taskStopWatch = Stopwatch.StartNew();
-var tasksOld = TaskBookingService.RunThreads(counters);
-await Task.WhenAll(tasks);
-
-Console.WriteLine($"Threads took {threadStopWatch.ElapsedMilliseconds} ms to complete");
-Console.WriteLine($"Tasks took {taskStopWatch.ElapsedMilliseconds} ms to complete");
- */
