@@ -1,3 +1,4 @@
+// BookingGateway.cs
 // HttpClient-implementasjon (Tilgjengelighet/Pris/Vær)
 using Core.Models;
 namespace Core.Services;
@@ -8,7 +9,8 @@ public class BookingGateway : IBookingGateway
         BookingRequest request,
         CancellationToken cancellationToken = default)
     {
-        await Task.Delay(500, cancellationToken);
+        var randomDelay = Random.Shared.Next(1000, 3000);
+        await Task.Delay(randomDelay, cancellationToken);
 
         // Simulerer 50% sjanse for tilgjengelighet
         return Random.Shared.Next(1, 10) > 5;

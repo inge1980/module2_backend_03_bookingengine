@@ -1,31 +1,38 @@
+// ThreadBookingService.cs
+// Del A: Håndterer OS-tråder og .Join()
+using System.Diagnostics;
 using Core.Models;
 namespace Core.Services;
 
-public static class ThreadBookingService
+public class ThreadBookingService
 {
-    public static List<Thread> RunThreads(IEnumerable<Counter> counters)
-    {
-        List<Thread> threads = [];
+    private static readonly IBookingGateway gateway = new BookingGateway();
 
-        foreach(var counter in counters)
+    public void RunThreads(IEnumerable<BookingRequest> requests)
+    {
+        var threads = new List<Thread>();
+
+        foreach (var request in requests)
         {
-            var thread = new Thread(()=>Count(counter));
+            var thread = new Thread(() => SimulateBooking(request));
             thread.Start();
             threads.Add(thread);
         }
 
-        return threads;
+        foreach (var thread in threads) thread.Join();
     }
 
-    private static void Count(Counter counter)
+    private void SimulateBooking(BookingRequest request)
     {
-        Console.WriteLine($"Threads: Counter {counter.Name} started counting on thread....");
+        Console.WriteLine(
+            $"[START] Thread: {request.RoomType} {request.StartDate:d} - {request.EndDate:d}");
 
-        for (var i = 1; i <= counter.MaxVal; i++)
-        {
-            Thread.Sleep(counter.Delay);
-            Console.WriteLine($"Threads: Counted to {i} on {counter.Name}");
-        }
-        Console.WriteLine($"Threads: Counter {counter.Name} is complete...");
+        var available = gateway
+            .CheckAvailabilityAsync(request)
+            .GetAwaiter()
+            .GetResult();
+
+        Console.WriteLine(
+            $"[END] Thread: {request.RoomType} {request.StartDate:d} - {request.EndDate:d} (Availability: {available})");
     }
 }

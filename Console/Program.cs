@@ -9,13 +9,24 @@ InitMenu();
 string[] threadList = new string[5];
 bool activeMenu = true;
 
+// lag noen reservasjonsforespørsler
+var requests = new List<BookingRequest>
+{
+    new("Single", DateTime.Today, DateTime.Today.AddDays(1)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(2)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(3)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(4)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(5)),
+    new("Double", DateTime.Today, DateTime.Today.AddDays(6))
+};
+
 async Task HandleMenu() {
     Console.Write("Velg menuvalg: ");
     string userChoice = Console.ReadLine() ?? "";
     
     switch (userChoice) {
         case "A":   JoinThreads(threadList);                break;
-        case "B":   TaskCompletion(threadList);             break;
+        case "B":   await TaskCompletion(threadList);             break;
         case "C":   await OrchestrationAsync(threadList);   break;
         case "D":   HttpClientIntegration(threadList);      break;
         case "E":   Exit();                                 break;
@@ -34,10 +45,20 @@ void InitMenu() {
 
 void JoinThreads(string[] list) {
     Console.WriteLine("JoinThreads");
+    var threadStopWatch = Stopwatch.StartNew();
+    var service = new ThreadBookingService();
+    service.RunThreads(requests);
+    threadStopWatch.Stop();
+    Console.WriteLine($"All booking threads took {threadStopWatch.ElapsedMilliseconds} ms to complete");
 }
 
-void TaskCompletion(string[] list) {
+async Task TaskCompletion(string[] list) {
     Console.WriteLine("TaskCompletion");
+    var taskStopWatch = Stopwatch.StartNew();
+    var tasks = TaskBookingService.RunTasks(requests);
+    await Task.WhenAll(tasks);
+    taskStopWatch.Stop();
+    Console.WriteLine($"All booking tasks took {taskStopWatch.ElapsedMilliseconds} ms to complete");
 }
 
 async Task OrchestrationAsync(string[] list) {
@@ -47,16 +68,6 @@ async Task OrchestrationAsync(string[] list) {
 
     // velg orchestrator
     var orchestrator = new AsyncAwaitOrchestrator(gateway);
-
-    var requests = new List<BookingRequest>
-    {
-        new("Single", DateTime.Today, DateTime.Today.AddDays(1)),
-        new("Double", DateTime.Today, DateTime.Today.AddDays(2)),
-        new("Double", DateTime.Today, DateTime.Today.AddDays(3)),
-        new("Double", DateTime.Today, DateTime.Today.AddDays(4)),
-        new("Double", DateTime.Today, DateTime.Today.AddDays(5)),
-        new("Double", DateTime.Today, DateTime.Today.AddDays(6))
-    };
 
     var ct = CancellationToken.None;
 

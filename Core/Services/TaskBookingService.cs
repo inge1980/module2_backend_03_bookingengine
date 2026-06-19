@@ -1,31 +1,36 @@
+// TaskBookingService.cs
+using System.Diagnostics;
 using Core.Models;
 namespace Core.Services;
 
 
 public static class TaskBookingService
 {
-    public static List<Task> RunThreads(IEnumerable<Counter> counters)
+    private static readonly IBookingGateway gateway = new BookingGateway();
+    
+    public static List<Task> RunTasks(IEnumerable<BookingRequest> requests)
     {
-        List<Task> tasks = [];
+        var tasks = new List<Task>();
 
-        foreach(var counter in counters)
+        foreach(var request in requests)
         {
-            var task = CountAsync(counter);
+            var task = SimulateBookingAsync(request);
             tasks.Add(task);
         }
 
         return tasks;
     }
 
-    private static async Task CountAsync(Counter counter)
+    private static async Task SimulateBookingAsync(BookingRequest request)
     {
-        Console.WriteLine($"Task: Counter {counter.Name} started counting on Task....");
+        Console.WriteLine(
+            $"[START] Task: {request.RoomType} {request.StartDate:d} - {request.EndDate:d}");
 
-        for (var i = 1; i <= counter.MaxVal; i++)
-        {
-            await Task.Delay(counter.Delay);
-            Console.WriteLine($"Task: Counted to {i} on {counter.Name}");
-        }
-        Console.WriteLine($"Task: Counter {counter.Name} is complete...");
+        var available = await gateway.CheckAvailabilityAsync(request);
+
+        Console.WriteLine(
+            $"[END] Task: {request.RoomType} {request.StartDate:d} - {request.EndDate:d} (Availability: {available})");
+
+
     }
 }
