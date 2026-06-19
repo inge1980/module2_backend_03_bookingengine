@@ -9,21 +9,20 @@ InitMenu();
 string[] threadList = new string[5];
 bool activeMenu = true;
 
-void HandleMenu() {
+async Task HandleMenu() {
     Console.Write("Velg menuvalg: ");
     string userChoice = Console.ReadLine() ?? "";
     
     switch (userChoice) {
-        case "A":   JoinThreads(threadList);              break;
-        case "B":   TaskCompletion(threadList);           break;
-        case "C":   OrchestrationAsync(threadList);       break;
-        case "D":   HttpClientIntegration(threadList);    break;
-        case "E":   Exit();                             break;
-        default:
-            Console.WriteLine("Ugyldig valg");
-            break;
+        case "A":   JoinThreads(threadList);                break;
+        case "B":   TaskCompletion(threadList);             break;
+        case "C":   await OrchestrationAsync(threadList);   break;
+        case "D":   HttpClientIntegration(threadList);      break;
+        case "E":   Exit();                                 break;
+        default:    Console.WriteLine("Ugyldig valg");      break;
     }
 }
+
 void InitMenu() {
     Console.WriteLine("Oppgave-meny");
     Console.WriteLine("A. Kjør tråder");
@@ -32,12 +31,15 @@ void InitMenu() {
     Console.WriteLine("D. Kjør HttpClient-integrasjon (tilgjengelighet/pris/vær)");
     Console.WriteLine("E. Avslutt");
 }
+
 void JoinThreads(string[] list) {
     Console.WriteLine("JoinThreads");
 }
+
 void TaskCompletion(string[] list) {
     Console.WriteLine("TaskCompletion");
 }
+
 async Task OrchestrationAsync(string[] list) {
     Console.WriteLine("OrchestrationAsync");    
 
@@ -66,20 +68,20 @@ async Task OrchestrationAsync(string[] list) {
 
     Console.WriteLine($"All booking tasks took {taskStopWatch.ElapsedMilliseconds} ms to complete");
 }
+
 void HttpClientIntegration(string[] list) {
     Console.WriteLine("HttpClientIntegration");
 }
+
 void Exit() {
     Console.WriteLine("Avslutter...");
     activeMenu = false;        
 }
 
-
-
 while (activeMenu)
 {
-    System.Threading.Thread.Sleep(1000);
-    HandleMenu();
+    //System.Threading.Thread.Sleep(1000);
+    await HandleMenu();
 }
 
 
